@@ -42,8 +42,8 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="text-center mb-10">
           <h1
-            className="text-5xl font-bold uppercase tracking-[0.3em] text-stone-900 leading-none"
-            style={{ fontFamily: 'var(--font-cormorant, Georgia, serif)' }}
+            className="text-5xl font-bold uppercase tracking-widest leading-none"
+            style={{ fontFamily: 'var(--font-cormorant, Georgia, serif)', color: '#1C1C1A' }}
           >
             VULPI
           </h1>
@@ -52,6 +52,12 @@ export default function LoginPage() {
             style={{ fontFamily: 'var(--font-cormorant, Georgia, serif)' }}
           >
             Ciência prescrita. Resultado real.
+          </p>
+          <p
+            className="mt-1 text-xs text-stone-300 tracking-wide"
+            style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
+          >
+            Alta Dermatologia Magistral · Clínica Crepaldi
           </p>
         </div>
 

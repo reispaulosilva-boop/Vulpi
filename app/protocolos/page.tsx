@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getFormulacaoById } from "@/app/data/formulations";
+import CopiarProtocolo from "@/components/CopiarProtocolo";
 
 interface Protocolo {
   condicao: string;
@@ -165,15 +166,21 @@ export default function ProtocolosPage() {
                       key={condicao}
                       className="flex flex-col sm:flex-row sm:items-center gap-3 py-3 px-4 bg-white rounded-lg border border-stone-100 hover:border-stone-200 transition-colors"
                     >
-                      <div className="sm:w-56 flex-shrink-0">
+                      <div className="sm:w-56 flex-shrink-0 flex items-center justify-between sm:block gap-2">
                         <p className="text-xs font-semibold text-stone-700 uppercase tracking-wide">
                           {condicao}
                         </p>
+                        <div className="sm:hidden">
+                          <CopiarProtocolo condicao={condicao} codigos={protocolo.ids} />
+                        </div>
                       </div>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-2 flex-1">
                         {protocolo.ids.map((id) => (
                           <ProtocoloChip key={id} id={id} />
                         ))}
+                      </div>
+                      <div className="hidden sm:block flex-shrink-0">
+                        <CopiarProtocolo condicao={condicao} codigos={protocolo.ids} />
                       </div>
                     </div>
                   );

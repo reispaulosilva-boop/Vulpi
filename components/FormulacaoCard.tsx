@@ -31,8 +31,9 @@ export default function FormulacaoCard({ formulacao }: FormulacaoCardProps) {
         <div className="flex items-center justify-between gap-2">
           <ViaBadge via={formulacao.via} />
           <span
-            className="text-xs text-stone-400 truncate max-w-[120px]"
+            className="text-xs truncate max-w-[120px] font-medium"
             title={formulacao.linha}
+            style={{ color: formulacao.acento_cor }}
           >
             {formulacao.linha}
           </span>

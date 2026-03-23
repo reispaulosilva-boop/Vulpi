@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { formulacoes, getFormulacaoById } from "@/app/data/formulations";
 import StatusBadge from "@/components/StatusBadge";
 import ViaBadge from "@/components/ViaBadge";
+import CopiarReceita from "@/components/CopiarReceita";
 
 export async function generateStaticParams() {
   return formulacoes.map((f) => ({ id: f.id }));
@@ -64,29 +65,36 @@ export default async function FormulacaoPage({
         >
           {/* Header */}
           <div className="p-6 sm:p-8 border-b border-stone-100">
-            <div className="flex flex-wrap items-center gap-2 mb-3">
-              <span
-                className="text-xs font-mono text-stone-400 tracking-wider bg-stone-50 px-2 py-1 rounded"
-                style={{ fontFamily: "var(--font-roboto-mono, monospace)" }}
-              >
-                {formulacao.id}
-              </span>
-              <span
-                className="text-xs font-medium px-2 py-1 rounded text-white"
-                style={{ backgroundColor: formulacao.acento_cor }}
-              >
-                {formulacao.linha}
-              </span>
-            </div>
-            <h1
-              className="text-2xl sm:text-3xl font-semibold text-stone-900 mb-4"
-              style={{ fontFamily: "var(--font-cormorant, Georgia, serif)" }}
-            >
-              {formulacao.nome}
-            </h1>
-            <div className="flex flex-wrap gap-2">
-              <StatusBadge status={formulacao.status} />
-              <ViaBadge via={formulacao.via} />
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-2 mb-3">
+                  <span
+                    className="text-xs font-mono text-stone-400 tracking-wider bg-stone-50 px-2 py-1 rounded"
+                    style={{ fontFamily: "var(--font-roboto-mono, monospace)" }}
+                  >
+                    {formulacao.id}
+                  </span>
+                  <span
+                    className="text-xs font-medium px-2 py-1 rounded text-white"
+                    style={{ backgroundColor: formulacao.acento_cor }}
+                  >
+                    {formulacao.linha}
+                  </span>
+                </div>
+                <h1
+                  className="text-2xl sm:text-3xl font-semibold text-stone-900 mb-4"
+                  style={{ fontFamily: "var(--font-cormorant, Georgia, serif)" }}
+                >
+                  {formulacao.nome}
+                </h1>
+                <div className="flex flex-wrap gap-2">
+                  <StatusBadge status={formulacao.status} />
+                  <ViaBadge via={formulacao.via} />
+                </div>
+              </div>
+              <div className="flex-shrink-0">
+                <CopiarReceita formulacao={formulacao} />
+              </div>
             </div>
           </div>
 
@@ -250,8 +258,13 @@ export default async function FormulacaoPage({
           </div>
         </div>
 
+        {/* Copiar Receita — botão principal visível */}
+        <div className="mt-6">
+          <CopiarReceita formulacao={formulacao} />
+        </div>
+
         {/* Navigation */}
-        <div className="mt-8 flex justify-between">
+        <div className="mt-6 flex justify-between">
           <Link
             href="/catalogo"
             className="text-sm text-stone-500 hover:text-stone-800 transition-colors"

@@ -1,8 +1,16 @@
 import Link from "next/link";
-import { getLinhas } from "@/app/data/formulations";
+import { getLinhas, formulacoes } from "@/app/data/formulations";
 
 export default function Home() {
   const linhas = getLinhas();
+
+  // Build a map of emUsoCount per linhaSlug
+  const emUsoMap = new Map<string, number>();
+  for (const f of formulacoes) {
+    if (f.status === "EM USO") {
+      emUsoMap.set(f.linhaSlug, (emUsoMap.get(f.linhaSlug) ?? 0) + 1);
+    }
+  }
 
   return (
     <div>
@@ -35,9 +43,12 @@ export default function Home() {
             Alta Dermatologia Magistral
           </p>
           <div className="w-16 h-px bg-stone-300 mx-auto mb-8" />
-          <p className="text-base sm:text-lg text-stone-600 leading-relaxed max-w-xl mx-auto mb-12">
+          <p className="text-base sm:text-lg text-stone-600 leading-relaxed max-w-xl mx-auto mb-6">
             Formulações magistrais de alta performance, desenvolvidas pela
             Clínica Crepaldi para resultados reais e mensuráveis.
+          </p>
+          <p className="text-sm text-stone-400 leading-loose max-w-lg mx-auto mb-12 italic">
+            A VULPI não nasceu de uma tendência de mercado. Nasceu da prática médica clínica — da necessidade de entregar tratamentos onde cada ativo, cada miligrama e cada veículo são desenhados para um alvo específico.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -108,6 +119,11 @@ export default function Home() {
                   <p className="text-xs text-stone-400">
                     {linha.count} formulação{linha.count !== 1 ? "ões" : ""}
                   </p>
+                  {(emUsoMap.get(linha.linhaSlug) ?? 0) > 0 && (
+                    <p className="text-xs mt-1" style={{ color: linha.acento_cor }}>
+                      {emUsoMap.get(linha.linhaSlug)} em uso
+                    </p>
+                  )}
                 </div>
                 <div
                   className="absolute bottom-0 right-0 w-16 h-16 rounded-tl-full opacity-5"
@@ -184,10 +200,7 @@ export default function Home() {
             "Ciência prescrita. Resultado real."
           </blockquote>
           <p className="text-sm text-stone-500 leading-loose">
-            Cada formulação VULPI nasce da prática clínica diária da Clínica
-            Crepaldi, conjugando os mais recentes ativos magistrais com
-            protocolos baseados em evidência. Do diagnóstico à farmácia, cada
-            etapa é pensada para o resultado do paciente.
+            A VULPI não nasceu de uma tendência de mercado. Nasceu da prática médica clínica — da necessidade de entregar tratamentos onde cada ativo, cada miligrama e cada veículo são desenhados para um alvo específico.
           </p>
         </div>
       </section>
