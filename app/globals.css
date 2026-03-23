@@ -23,3 +23,86 @@ body {
 * {
   box-sizing: border-box;
 }
+
+/* ── Animações de entrada ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Utilitários de animação */
+.anim-fade-up   { animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-fade-in   { animation: fadeIn 0.6s ease both; }
+.anim-slide-left { animation: slideInLeft 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-scale-in  { animation: scaleIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+.delay-100  { animation-delay: 0.10s; }
+.delay-200  { animation-delay: 0.20s; }
+.delay-300  { animation-delay: 0.32s; }
+.delay-400  { animation-delay: 0.46s; }
+.delay-500  { animation-delay: 0.60s; }
+.delay-600  { animation-delay: 0.76s; }
+.delay-700  { animation-delay: 0.92s; }
+
+/* Scroll reveal — começa invisível, JS adiciona .is-visible */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Card hover — efeito de brilho na borda */
+.card-hover {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.25s ease,
+              border-color 0.25s ease;
+}
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.12);
+}
+
+/* Gradiente de fundo animado no hero */
+@keyframes gradientDrift {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+.hero-gradient {
+  background-size: 200% 200%;
+  animation: gradientDrift 12s ease infinite;
+}
+
+/* Linha separadora animada */
+.line-grow {
+  transform-origin: left;
+  animation: scaleX 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes scaleX {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
