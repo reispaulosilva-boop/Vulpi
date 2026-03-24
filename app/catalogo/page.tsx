@@ -3,7 +3,8 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import { formulacoes, getLinhas } from "@/app/data/formulations";
+import { formulacoes } from "@/app/data/formulations";
+import { getLinhas, getLinhaSlug } from "@/app/data/linha-config";
 import FormulacaoCard from "@/components/FormulacaoCard";
 
 function CatalogoContent() {
@@ -21,13 +22,13 @@ function CatalogoContent() {
 
   const filtered = useMemo(() => {
     return formulacoes.filter((f) => {
-      const matchLinha = selectedLinha === "todos" || f.linhaSlug === selectedLinha;
+      const matchLinha = selectedLinha === "todos" || getLinhaSlug(f.linha) === selectedLinha;
       const matchStatus = selectedStatus === "todos" || f.status === selectedStatus;
       const matchVia = selectedVia === "todos" || f.via === selectedVia;
       const matchSearch =
         search === "" ||
         f.nome.toLowerCase().includes(search.toLowerCase()) ||
-        f.id.toLowerCase().includes(search.toLowerCase()) ||
+        f.codigo.toLowerCase().includes(search.toLowerCase()) ||
         f.indicacao.toLowerCase().includes(search.toLowerCase());
       return matchLinha && matchStatus && matchVia && matchSearch;
     });
@@ -216,7 +217,7 @@ function CatalogoContent() {
           >
             {filtered.map((f, i) => (
               <div
-                key={f.id}
+                key={f.codigo}
                 className="anim-scale-in"
                 style={{ animationDelay: `${Math.min(i * 30, 300)}ms` }}
               >

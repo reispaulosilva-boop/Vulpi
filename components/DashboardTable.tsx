@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useMemo } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { formulacoes } from '@/app/data/formulations'
+import { getLinhaColor, getLinhaSlug } from '@/app/data/linha-config'
 import StatusBadge from './StatusBadge'
 import ViaBadge from './ViaBadge'
 
@@ -33,7 +34,7 @@ export default function DashboardTable() {
 
     // Filtro por linha terapêutica
     if (filters.line) {
-      result = result.filter((f) => f.linhaSlug === filters.line)
+      result = result.filter((f) => getLinhaSlug(f.linha) === filters.line)
     }
 
     // Filtro por status
@@ -43,7 +44,7 @@ export default function DashboardTable() {
     if (filters.search) {
       const query = filters.search.toLowerCase()
       result = result.filter((f) => {
-        const codigoMatch = f.id.toLowerCase().includes(query)
+        const codigoMatch = f.codigo.toLowerCase().includes(query)
         const nomeMatch = f.nome.toLowerCase().includes(query)
         const ativosMatch = f.ativos.some((a) =>
           a.nome.toLowerCase().includes(query)
@@ -61,7 +62,7 @@ export default function DashboardTable() {
     emUso: formulacoes.filter((f) => f.status === 'EM USO').length,
     aguardandoValidacao: formulacoes.filter((f) => f.status === 'PROPOSTO')
       .length,
-    linhasAtivas: new Set(formulacoes.map((f) => f.linhaSlug)).size,
+    linhasAtivas: new Set(formulacoes.map((f) => f.linha)).size,
   }
 
   const handleStatusToggle = (status: string) => {
@@ -207,11 +208,11 @@ export default function DashboardTable() {
             {filteredFormulacoes.length > 0 ? (
               filteredFormulacoes.map((formulacao) => (
                 <tr
-                  key={formulacao.id}
+                  key={formulacao.codigo}
                   className="border-b border-stone-100 hover:bg-stone-50 transition-colors cursor-pointer"
                   onClick={() => {
                     // Redireciona para detalhe ao clicar na linha
-                    window.location.href = `/formulacao/${formulacao.id}`
+                    window.location.href = `/formulacao/${formulacao.codigo}`
                   }}
                 >
                   <td className="px-6 py-4">
@@ -219,7 +220,7 @@ export default function DashboardTable() {
                       className="text-stone-600 font-mono text-xs tracking-wider"
                       style={{ fontFamily: 'var(--font-roboto-mono, monospace)' }}
                     >
-                      {formulacao.id}
+                      {formulacao.codigo}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-stone-800 font-medium">
@@ -228,7 +229,7 @@ export default function DashboardTable() {
                   <td className="px-6 py-4">
                     <span
                       className="text-xs font-medium"
-                      style={{ color: formulacao.acento_cor }}
+                      style={{ color: getLinhaColor(formulacao.linha) }}
                     >
                       {formulacao.linha}
                     </span>
@@ -241,7 +242,7 @@ export default function DashboardTable() {
                   </td>
                   <td className="px-6 py-4">
                     <Link
-                      href={`/formulacao/${formulacao.id}`}
+                      href={`/formulacao/${formulacao.codigo}`}
                       onClick={(e) => e.stopPropagation()}
                       className="inline-flex items-center px-3 py-1.5 text-xs font-medium border border-stone-300 text-stone-700 rounded-lg hover:bg-stone-50 transition-colors"
                     >

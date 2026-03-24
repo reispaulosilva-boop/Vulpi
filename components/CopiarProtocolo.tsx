@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { getFormulacaoById } from '@/app/data/formulations'
+import { getFormulacaoById } from '@/app/data/linha-config'
 
 export default function CopiarProtocolo({ condicao, codigos }: { condicao: string, codigos: string[] }) {
   const [copiado, setCopiado] = useState(false)
@@ -11,8 +11,8 @@ export default function CopiarProtocolo({ condicao, codigos }: { condicao: strin
     const detalhes = codigos.map(codigo => {
       const f = getFormulacaoById(codigo)
       if (!f) return `${codigo} — (ver prescrição específica)`
-      const ativos = f.ativos.map(a => `${a.nome} ${a.concentracao}`).join(', ')
-      return `${f.id} — ${f.nome}
+      const ativos = f.ativos.map((a) => `${a.nome} ${a.concentracao}`).join(', ')
+      return `${f.codigo} — ${f.nome}
 Via: ${f.via} | Duração: ${f.duracao}
 Posologia: ${f.posologia}
 Ativos: ${ativos}

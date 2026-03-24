@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { formulacoes, getFormulacaoById } from "@/app/data/formulations";
+import { formulacoes } from "@/app/data/formulations";
+import { getFormulacaoById, getLinhaColor } from "@/app/data/linha-config";
 import StatusBadge from "@/components/StatusBadge";
 import ViaBadge from "@/components/ViaBadge";
 import CopiarReceita from "@/components/CopiarReceita";
 
 export async function generateStaticParams() {
-  return formulacoes.map((f) => ({ id: f.id }));
+  return formulacoes.map((f) => ({ id: f.codigo }));
 }
 
 export async function generateMetadata({
@@ -18,7 +19,7 @@ export async function generateMetadata({
   const formulacao = getFormulacaoById(id);
   if (!formulacao) return { title: "Formulação não encontrada" };
   return {
-    title: `${formulacao.id} – ${formulacao.nome} | VULPI`,
+    title: `${formulacao.codigo} – ${formulacao.nome} | VULPI`,
     description: formulacao.indicacao,
   };
 }
@@ -61,7 +62,7 @@ export default async function FormulacaoPage({
         {/* Card */}
         <div
           className="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-sm"
-          style={{ borderTop: `4px solid ${formulacao.acento_cor}` }}
+          style={{ borderTop: `4px solid ${getLinhaColor(formulacao.linha)}` }}
         >
           {/* Header */}
           <div className="p-6 sm:p-8 border-b border-stone-100">
@@ -72,11 +73,11 @@ export default async function FormulacaoPage({
                     className="text-xs font-mono text-stone-400 tracking-wider bg-stone-50 px-2 py-1 rounded"
                     style={{ fontFamily: "var(--font-roboto-mono, monospace)" }}
                   >
-                    {formulacao.id}
+                    {formulacao.codigo}
                   </span>
                   <span
                     className="text-xs font-medium px-2 py-1 rounded text-white"
-                    style={{ backgroundColor: formulacao.acento_cor }}
+                    style={{ backgroundColor: getLinhaColor(formulacao.linha) }}
                   >
                     {formulacao.linha}
                   </span>
@@ -171,7 +172,7 @@ export default async function FormulacaoPage({
             </div>
 
             {/* Equivalente */}
-            {formulacao.equivalente_industrializado && (
+            {formulacao.equivalenteIndustrializado && (
               <div className="flex items-start gap-3 p-4 bg-blue-50 rounded-lg border border-blue-100">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -192,19 +193,19 @@ export default async function FormulacaoPage({
                     Equivalente Industrializado
                   </p>
                   <p className="text-sm text-blue-600">
-                    {formulacao.equivalente_industrializado}
+                    {formulacao.equivalenteIndustrializado}
                   </p>
                 </div>
               </div>
             )}
 
             {/* Observações */}
-            {formulacao.observacoes && (
+            {formulacao.obs && (
               <div
                 className={`flex items-start gap-3 p-4 rounded-lg border ${
-                  formulacao.observacoes.includes("ALERTA") ||
-                  formulacao.observacoes.includes("contraindicado") ||
-                  formulacao.observacoes.includes("Contraindicado")
+                  formulacao.obs.includes("ALERTA") ||
+                  formulacao.obs.includes("contraindicado") ||
+                  formulacao.obs.includes("Contraindicado")
                     ? "bg-amber-50 border-amber-200"
                     : "bg-stone-50 border-stone-200"
                 }`}
@@ -212,9 +213,9 @@ export default async function FormulacaoPage({
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className={`w-4 h-4 flex-shrink-0 mt-0.5 ${
-                    formulacao.observacoes.includes("ALERTA") ||
-                    formulacao.observacoes.includes("contraindicado") ||
-                    formulacao.observacoes.includes("Contraindicado")
+                    formulacao.obs.includes("ALERTA") ||
+                    formulacao.obs.includes("contraindicado") ||
+                    formulacao.obs.includes("Contraindicado")
                       ? "text-amber-500"
                       : "text-stone-400"
                   }`}
@@ -232,9 +233,9 @@ export default async function FormulacaoPage({
                 <div>
                   <p
                     className={`text-xs font-medium uppercase tracking-wider mb-0.5 ${
-                      formulacao.observacoes.includes("ALERTA") ||
-                      formulacao.observacoes.includes("contraindicado") ||
-                      formulacao.observacoes.includes("Contraindicado")
+                      formulacao.obs.includes("ALERTA") ||
+                      formulacao.obs.includes("contraindicado") ||
+                      formulacao.obs.includes("Contraindicado")
                         ? "text-amber-700"
                         : "text-stone-500"
                     }`}
@@ -243,14 +244,14 @@ export default async function FormulacaoPage({
                   </p>
                   <p
                     className={`text-sm ${
-                      formulacao.observacoes.includes("ALERTA") ||
-                      formulacao.observacoes.includes("contraindicado") ||
-                      formulacao.observacoes.includes("Contraindicado")
+                      formulacao.obs.includes("ALERTA") ||
+                      formulacao.obs.includes("contraindicado") ||
+                      formulacao.obs.includes("Contraindicado")
                         ? "text-amber-700"
                         : "text-stone-600"
                     }`}
                   >
-                    {formulacao.observacoes}
+                    {formulacao.obs}
                   </p>
                 </div>
               </div>

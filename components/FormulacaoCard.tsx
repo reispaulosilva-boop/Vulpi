@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Formulacao } from "@/app/data/formulations";
+import { getLinhaColor } from "@/app/data/linha-config";
 import StatusBadge from "./StatusBadge";
 import ViaBadge from "./ViaBadge";
 
@@ -9,15 +10,15 @@ interface FormulacaoCardProps {
 
 export default function FormulacaoCard({ formulacao }: FormulacaoCardProps) {
   return (
-    <Link href={`/formulacao/${formulacao.id}`} className="group block h-full">
+    <Link href={`/formulacao/${formulacao.codigo}`} className="group block h-full">
       <div
         className="relative bg-white rounded-lg border border-stone-150 p-4 h-full flex flex-col overflow-hidden card-hover"
-        style={{ borderLeft: `3px solid ${formulacao.acento_cor}` }}
+        style={{ borderLeft: `3px solid ${getLinhaColor(formulacao.linha)}` }}
       >
         {/* Fundo de cor sutil ao hover */}
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-          style={{ backgroundColor: formulacao.acento_cor + "06" }}
+          style={{ backgroundColor: getLinhaColor(formulacao.linha) + "06" }}
         />
 
         {/* Conteúdo */}
@@ -27,7 +28,7 @@ export default function FormulacaoCard({ formulacao }: FormulacaoCardProps) {
               className="text-[11px] text-stone-400 tracking-wider transition-colors duration-200 group-hover:text-stone-600"
               style={{ fontFamily: "var(--font-roboto-mono, monospace)" }}
             >
-              {formulacao.id}
+              {formulacao.codigo}
             </span>
             <div className="flex items-center gap-1 flex-shrink-0">
               <StatusBadge status={formulacao.status} />
@@ -43,7 +44,7 @@ export default function FormulacaoCard({ formulacao }: FormulacaoCardProps) {
             <span
               className="text-xs truncate max-w-[110px] font-medium opacity-70 group-hover:opacity-100 transition-opacity duration-200"
               title={formulacao.linha}
-              style={{ color: formulacao.acento_cor }}
+              style={{ color: getLinhaColor(formulacao.linha) }}
             >
               {formulacao.linha}
             </span>
@@ -53,7 +54,7 @@ export default function FormulacaoCard({ formulacao }: FormulacaoCardProps) {
         {/* Indicator dot */}
         <div
           className="absolute bottom-0 right-0 w-12 h-12 rounded-tl-full opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"
-          style={{ backgroundColor: formulacao.acento_cor }}
+          style={{ backgroundColor: getLinhaColor(formulacao.linha) }}
         />
       </div>
     </Link>

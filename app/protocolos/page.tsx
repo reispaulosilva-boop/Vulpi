@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getFormulacaoById } from "@/app/data/formulations";
+import { getFormulacaoById } from "@/app/data/linha-config";
 import CopiarProtocolo from "@/components/CopiarProtocolo";
 
 interface Protocolo {

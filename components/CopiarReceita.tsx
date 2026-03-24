@@ -9,7 +9,7 @@ export default function CopiarReceita({ formulacao }: { formulacao: Formulacao }
     const hoje = new Date().toLocaleDateString('pt-BR')
     const sep = '─────────────────────────────────────'
     const ativos = formulacao.ativos
-      .map(a => `• ${a.nome} — ${a.concentracao}${a.via ? ` (${a.via})` : ''}${a.fornecedor ? ` — ${a.fornecedor}` : ''}`)
+      .map(a => `• ${a.nome} — ${a.concentracao}${a.fornecedor ? ` — ${a.fornecedor}` : ''}`)
       .join('\n')
 
     return `${sep}
@@ -17,7 +17,7 @@ VULPI — Alta Dermatologia Magistral
 Clínica Crepaldi | Dr. Paulo Silva Reis
 ${sep}
 FORMULAÇÃO: ${formulacao.nome}
-CÓDIGO: ${formulacao.id}
+CÓDIGO: ${formulacao.codigo}
 LINHA: ${formulacao.linha}
 STATUS: ${formulacao.status}
 ${sep}
@@ -32,7 +32,7 @@ DURAÇÃO: ${formulacao.duracao}
 VIA: ${formulacao.via}
 
 POSOLOGIA:
-${formulacao.posologia}${formulacao.observacoes ? '\n\nOBSERVAÇÕES CLÍNICAS:\n' + formulacao.observacoes : ''}${formulacao.equivalente_industrializado ? '\n\nEQUIVALENTE INDUSTRIALIZADO: ' + formulacao.equivalente_industrializado : ''}
+${formulacao.posologia}${formulacao.obs ? '\n\nOBSERVAÇÕES CLÍNICAS:\n' + formulacao.obs : ''}${formulacao.equivalenteIndustrializado ? '\n\nEQUIVALENTE INDUSTRIALIZADO: ' + formulacao.equivalenteIndustrializado : ''}
 ${sep}
 Prescrito por: Dr. Paulo Silva Reis — CRM-MT
 Data: ${hoje}

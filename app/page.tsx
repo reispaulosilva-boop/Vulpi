@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { getLinhas, formulacoes } from "@/app/data/formulations";
+import { formulacoes } from "@/app/data/formulations";
+import { getLinhas } from "@/app/data/linha-config";
 import ScrollReveal from "@/components/ScrollReveal";
 
 export default function Home() {
@@ -8,11 +9,11 @@ export default function Home() {
   const emUsoMap = new Map<string, number>();
   for (const f of formulacoes) {
     if (f.status === "EM USO") {
-      emUsoMap.set(f.linhaSlug, (emUsoMap.get(f.linhaSlug) ?? 0) + 1);
+      emUsoMap.set(f.linha, (emUsoMap.get(f.linha) ?? 0) + 1);
     }
   }
 
-  const totalFormulacoes = linhas.reduce((acc, l) => acc + l.count, 0);
+  const totalFormulacoes = linhas.reduce((acc: number, l) => acc + l.count, 0);
 
   return (
     <div>
@@ -167,14 +168,14 @@ export default function Home() {
                   {/* Fundo de cor ao hover */}
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{ backgroundColor: linha.acento_cor + "08" }}
+                    style={{ backgroundColor: `${linha.acento_cor}08` }}
                   />
 
                   {/* Círculo decorativo */}
                   <div
                     className="relative w-9 h-9 rounded-full mb-5 flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
                     style={{
-                      backgroundColor: linha.acento_cor + "18",
+                      backgroundColor: `${linha.acento_cor}18`,
                       border: `1.5px solid ${linha.acento_cor}30`,
                     }}
                   >
@@ -194,9 +195,9 @@ export default function Home() {
                     <p className="text-xs text-stone-400">
                       {linha.count} formulação{linha.count !== 1 ? "ões" : ""}
                     </p>
-                    {(emUsoMap.get(linha.linhaSlug) ?? 0) > 0 && (
+                    {(emUsoMap.get(linha.linha) ?? 0) > 0 && (
                       <p className="text-xs mt-1 font-medium" style={{ color: linha.acento_cor }}>
-                        {emUsoMap.get(linha.linhaSlug)} em uso
+                        {emUsoMap.get(linha.linha)} em uso
                       </p>
                     )}
                   </div>
@@ -205,7 +206,7 @@ export default function Home() {
                   <div className="relative mt-4 flex items-center justify-end">
                     <span
                       className="text-xs opacity-0 group-hover:opacity-100 transition-all duration-200 group-hover:translate-x-0 -translate-x-2"
-                      style={{ color: linha.acento_cor, fontFamily: "var(--font-inter)" }}
+                      style={{ color: linha.acento_cor, fontFamily: "var(--font-inter, sans-serif)" }}
                     >
                       Ver formulações →
                     </span>
