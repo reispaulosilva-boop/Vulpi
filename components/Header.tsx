@@ -65,6 +65,7 @@ export default function Header() {
 
           <nav className="flex items-center gap-6">
             {navLink('/', 'Home')}
+            {navLink('/dashboard', 'Dashboard')}
             {navLink('/catalogo', 'Catálogo')}
             {navLink('/protocolos', 'Protocolos')}
             <button
