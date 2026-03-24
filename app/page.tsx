@@ -66,7 +66,7 @@ function HomeView({
           className="anim-fade-up delay-300 text-lg sm:text-xl italic text-stone-500 mb-6 tracking-wide"
           style={{ fontFamily: 'var(--font-cormorant, Georgia, serif)' }}
         >
-          Alta Dermatologia Magistral
+          Ciência aplicada. Decisão segura.
         </p>
 
         {/* Divisor */}
@@ -81,7 +81,7 @@ function HomeView({
           className="anim-fade-up delay-500 text-base sm:text-lg text-stone-600 leading-relaxed max-w-xl mx-auto mb-12"
           style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
         >
-          Ferramentas clínicas e de cuidado com a pele, integradas em um único lugar.
+          Ferramentas clínicas e de cuidado com a pele, desenvolvidas por um dermatologista para orientar decisões com base em evidência — não em tendência.
         </p>
 
         {/* Cards de seleção */}
@@ -108,7 +108,7 @@ function HomeView({
                 className="text-xs text-stone-400 leading-relaxed"
                 style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
               >
-                Acesse recursos de cuidado e acompanhamento da sua pele.
+                Acesse recursos desenvolvidos para guiar seu cuidado com a pele com segurança e clareza.
               </p>
             </div>
             <div className="flex justify-end mt-4">
@@ -140,7 +140,7 @@ function HomeView({
                 className="text-xs text-stone-400 leading-relaxed"
                 style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
               >
-                Acesse os sistemas clínicos e ferramentas de prescrição.
+                Acesse os sistemas clínicos, de prescrição e de gestão da Clínica Crepaldi.
               </p>
             </div>
             <div className="flex justify-end mt-4">
@@ -171,11 +171,17 @@ function PacienteView({ onVoltar }: { onVoltar: () => void }) {
             VULPI
           </p>
           <h2
-            className="text-4xl sm:text-5xl font-semibold text-stone-900 mb-12"
+            className="text-4xl sm:text-5xl font-semibold text-stone-900 mb-3"
             style={{ fontFamily: 'var(--font-cormorant, Georgia, serif)' }}
           >
             Área do Paciente
           </h2>
+          <p
+            className="text-sm text-stone-400 mb-12 leading-relaxed"
+            style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
+          >
+            Ferramentas criadas para que você tome decisões mais seguras sobre a sua pele.
+          </p>
         </div>
 
         <ScrollReveal>
@@ -203,7 +209,7 @@ function PacienteView({ onVoltar }: { onVoltar: () => void }) {
                 className="text-xs text-stone-500 leading-relaxed"
                 style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
               >
-                Programa de acompanhamento de tratamento dermatológico com orientações personalizadas e acesso ao histórico de prescrições.
+                Skincare personalizado com base no seu biotipo e nas suas queixas reais. Produtos e rotinas recomendados por um dermatologista — sem achismo, sem exagero.
               </p>
             </div>
           </div>
@@ -219,25 +225,25 @@ const sistemas = [
   {
     id: 'farmacia',
     titulo: 'Sistema Farmácia',
-    descricao: 'Catálogo de formulações magistrais, protocolos clínicos e geração de prescrições.',
+    descricao: 'Catálogo completo de formulações magistrais VULPI, protocolos terapêuticos por linha e geração de prescrições.',
     status: 'ativo' as const,
   },
   {
     id: 'avaliacao',
     titulo: 'Sistema Avaliação',
-    descricao: 'Anamnese estruturada, fichas fotográficas e acompanhamento de evolução.',
+    descricao: 'Assistente de consulta para avaliação rápida de queixas e indicação de procedimentos estéticos com base em evidência.',
     status: 'em-breve' as const,
   },
   {
     id: 'biologicos',
     titulo: 'Sistema Biológicos',
-    descricao: 'Protocolos de imunobiológicos, rastreio de efeitos adversos e monitoramento.',
+    descricao: 'Gestão de solicitações, auditorias e laudos para terapia biológica em psoríase e outras dermatoses inflamatórias.',
     status: 'em-breve' as const,
   },
   {
     id: 'viral',
     titulo: 'Sistema Viral',
-    descricao: 'Gestão de casos de doenças virais dermatológicas e condutas clínicas.',
+    descricao: 'Monitoramento de tendências, análise de engajamento e geração de roteiros para conteúdo dermatológico em redes sociais.',
     status: 'em-breve' as const,
   },
 ]
