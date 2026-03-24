@@ -4,12 +4,10 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Allow login page and API routes
   if (pathname === '/login' || pathname.startsWith('/api/')) {
     return NextResponse.next()
   }
 
-  // Check for session cookie
   const session = request.cookies.get('vulpi_session')
 
   if (!session || session.value !== 'authenticated') {
@@ -21,7 +19,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    '/((?!_next/static|_next/image|favicon.ico).*)',
-  ],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 }
