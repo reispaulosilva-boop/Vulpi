@@ -106,3 +106,21 @@ body {
   from { transform: scaleX(0); }
   to   { transform: scaleX(1); }
 }
+
+/* ── Print styles ── */
+@media print {
+  header,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+  }
+
+  #receita-a4 {
+    box-shadow: none !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+}
