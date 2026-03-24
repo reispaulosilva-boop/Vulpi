@@ -279,13 +279,22 @@ function ProfissionalView({ onVoltar }: { onVoltar: () => void }) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {sistemas.map((s, i) => {
               const ativo = s.status === 'ativo'
+              const isAvaliacao = s.id === 'avaliacao'
               return (
                 <div
                   key={s.id}
-                  onClick={ativo ? () => { window.location.href = '/login' } : undefined}
+                  onClick={
+                    ativo
+                      ? () => { window.location.href = '/login' }
+                      : isAvaliacao
+                      ? () => { window.location.href = '/avaliacao' }
+                      : undefined
+                  }
                   className={`anim-fade-up bg-white rounded-xl p-6 flex flex-col justify-between min-h-[160px] transition-all duration-300 ${
                     ativo
                       ? 'border border-stone-200 card-hover cursor-pointer group'
+                      : isAvaliacao
+                      ? 'border border-stone-100 card-hover cursor-pointer group'
                       : 'border border-stone-100 opacity-50 cursor-default'
                   }`}
                   style={{
