@@ -81,9 +81,9 @@ export default function DashboardSidebar() {
   const currentLine = searchParams.get('linha') || ''
 
   return (
-    <aside className="fixed left-0 top-16 h-[calc(100vh-64px)] w-60 bg-white border-r border-stone-200 overflow-y-auto">
+    <aside className="fixed left-0 top-16 h-[calc(100vh-64px)] w-60 bg-white border-r border-stone-200 flex flex-col">
       {/* Topo */}
-      <div className="p-6 border-b border-stone-200">
+      <div className="p-6 border-b border-stone-200 flex-shrink-0">
         <h2
           className="text-xl font-bold text-stone-900 leading-none mb-1"
           style={{ fontFamily: 'var(--font-cormorant, Georgia, serif)' }}
@@ -96,7 +96,7 @@ export default function DashboardSidebar() {
       </div>
 
       {/* Navegação */}
-      <nav className="p-4 space-y-1">
+      <nav className="flex-1 overflow-y-auto p-4 space-y-1">
         {therapeuticLines.map((line) => {
           const isActive = currentLine === line.slug
           return (
@@ -120,11 +120,9 @@ export default function DashboardSidebar() {
       </nav>
 
       {/* Rodapé - Card do usuário */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-stone-200 bg-stone-50">
-        <div className="bg-white rounded-lg p-4 border border-stone-200">
-          <p className="text-xs font-medium text-stone-900">Dr. Paulo Reis</p>
-          <p className="text-xs text-stone-500">Dermatologista</p>
-        </div>
+      <div className="flex-shrink-0 p-4 border-t border-stone-200 bg-stone-50">
+        <p className="text-xs font-medium text-stone-900">Dr. Paulo Silva Reis</p>
+        <p className="text-xs text-stone-500">Dermatologista · Clínica Crepaldi</p>
       </div>
     </aside>
   )
