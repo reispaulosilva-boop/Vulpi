@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, FormEvent } from 'react'
 import ScrollReveal from '@/components/ScrollReveal'
 
 type View = 'home' | 'paciente' | 'profissional'
@@ -248,13 +248,141 @@ const sistemas = [
   },
 ]
 
-function ProfissionalView({ onVoltar }: { onVoltar: () => void }) {
+function LoginProfissional({ onVoltar, onAutenticado }: { onVoltar: () => void; onAutenticado: () => void }) {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [erro, setErro] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault()
+    setErro('')
+    setLoading(true)
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+        credentials: 'include',
+      })
+      if (res.ok) {
+        onAutenticado()
+      } else {
+        setErro('Credenciais inválidas.')
+      }
+    } catch {
+      setErro('Credenciais inválidas.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <section className="min-h-[calc(100vh-4rem)] px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-sm mx-auto">
+        <div className="anim-fade-up">
+          <BotaoVoltar onClick={onVoltar} />
+
+          <h2
+            className="text-3xl font-semibold text-stone-900 mb-1"
+            style={{ fontFamily: 'var(--font-cormorant, Georgia, serif)' }}
+          >
+            Acesso Profissional
+          </h2>
+          <p
+            className="text-xs text-stone-400 tracking-widest mb-10"
+            style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
+          >
+            Clínica Crepaldi
+          </p>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <div>
+              <label
+                htmlFor="prof-username"
+                className="block text-xs uppercase tracking-widest text-stone-400 mb-1"
+                style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
+              >
+                Usuário
+              </label>
+              <input
+                id="prof-username"
+                type="text"
+                autoComplete="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                className="w-full px-3 py-2 bg-transparent border border-stone-300 text-stone-900 text-sm outline-none focus:border-stone-600 transition-colors duration-150"
+                style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="prof-password"
+                className="block text-xs uppercase tracking-widest text-stone-400 mb-1"
+                style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
+              >
+                Senha
+              </label>
+              <input
+                id="prof-password"
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full px-3 py-2 bg-transparent border border-stone-300 text-stone-900 text-sm outline-none focus:border-stone-600 transition-colors duration-150"
+                style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
+              />
+            </div>
+
+            {erro && (
+              <p
+                className="text-xs text-red-700"
+                style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
+              >
+                {erro}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="mt-2 w-full bg-stone-900 text-white rounded-full px-8 py-3 text-sm tracking-wide hover:bg-stone-800 transition-colors disabled:opacity-50"
+              style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
+            >
+              {loading ? 'Entrando…' : 'Entrar'}
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function ProfissionalView({
+  onVoltar,
+  autenticado,
+  onAutenticado,
+}: {
+  onVoltar: () => void
+  autenticado: boolean
+  onAutenticado: () => void
+}) {
+  if (!autenticado) {
+    return <LoginProfissional onVoltar={onVoltar} onAutenticado={onAutenticado} />
+  }
+
+  async function handleSair() {
+    await fetch('/api/logout', { method: 'POST', credentials: 'include' })
+    onVoltar()
+  }
+
   return (
     <section className="min-h-[calc(100vh-4rem)] px-4 sm:px-6 lg:px-8 py-16">
       <div className="max-w-3xl mx-auto">
         <div className="anim-fade-up">
-          <BotaoVoltar onClick={onVoltar} />
-
           <p
             className="text-xs uppercase tracking-[0.35em] text-stone-400 mb-3"
             style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
@@ -285,7 +413,7 @@ function ProfissionalView({ onVoltar }: { onVoltar: () => void }) {
                   key={s.id}
                   onClick={
                     ativo
-                      ? () => { window.location.href = '/login' }
+                      ? () => { window.location.href = '/dashboard' }
                       : isAvaliacao
                       ? () => { window.location.href = '/avaliacao' }
                       : undefined
@@ -336,7 +464,7 @@ function ProfissionalView({ onVoltar }: { onVoltar: () => void }) {
                   <div className="flex justify-end mt-4">
                     <span
                       className={`text-base transition-colors duration-200 ${
-                        ativo ? 'text-stone-400 group-hover:text-stone-700' : 'text-stone-200'
+                        ativo || isAvaliacao ? 'text-stone-400 group-hover:text-stone-700' : 'text-stone-200'
                       }`}
                     >
                       →
@@ -347,6 +475,16 @@ function ProfissionalView({ onVoltar }: { onVoltar: () => void }) {
             })}
           </div>
         </ScrollReveal>
+
+        <div className="mt-10 text-center">
+          <button
+            onClick={handleSair}
+            className="text-xs text-stone-300 hover:text-stone-500 transition-colors"
+            style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
+          >
+            Sair
+          </button>
+        </div>
       </div>
     </section>
   )
@@ -376,6 +514,7 @@ function Footer() {
 
 export default function Home() {
   const [view, setView] = useState<View>('home')
+  const [autenticado, setAutenticado] = useState(false)
 
   return (
     <div>
@@ -390,7 +529,11 @@ export default function Home() {
           <PacienteView onVoltar={() => setView('home')} />
         )}
         {view === 'profissional' && (
-          <ProfissionalView onVoltar={() => setView('home')} />
+          <ProfissionalView
+            onVoltar={() => { setAutenticado(false); setView('home') }}
+            autenticado={autenticado}
+            onAutenticado={() => setAutenticado(true)}
+          />
         )}
       </div>
       <Footer />
