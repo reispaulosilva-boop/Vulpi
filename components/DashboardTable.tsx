@@ -10,7 +10,6 @@ import ViaBadge from './ViaBadge'
 
 interface FiltersState {
   search: string
-  line: string
   statuses: Record<string, boolean>
 }
 
@@ -20,7 +19,6 @@ export default function DashboardTable() {
 
   const [filters, setFilters] = useState<FiltersState>({
     search: '',
-    line: currentLine,
     statuses: {
       'EM USO': true,
       NOVO: true,
@@ -32,9 +30,9 @@ export default function DashboardTable() {
   const filteredFormulacoes = useMemo(() => {
     let result = formulacoes
 
-    // Filtro por linha terapêutica
-    if (filters.line) {
-      result = result.filter((f) => getLinhaSlug(f.linha) === filters.line)
+    // Filtro por linha terapêutica (derivado direto da URL)
+    if (currentLine) {
+      result = result.filter((f) => getLinhaSlug(f.linha) === currentLine)
     }
 
     // Filtro por status
@@ -54,7 +52,7 @@ export default function DashboardTable() {
     }
 
     return result
-  }, [filters])
+  }, [filters, currentLine])
 
   // Estatísticas
   const stats = {
