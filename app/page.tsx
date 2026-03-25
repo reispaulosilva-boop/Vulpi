@@ -265,7 +265,7 @@ const sistemas = [
     id: 'avaliacao',
     titulo: 'Sistema Avaliação',
     descricao: 'Assistente de consulta para avaliação rápida de queixas e indicação de procedimentos estéticos com base em evidência.',
-    status: 'em-breve' as const,
+    status: 'ativo' as const,
   },
   {
     id: 'biologicos',
@@ -451,10 +451,10 @@ function ProfissionalView({
                   key={s.id}
                   variants={itemVariants}
                   onClick={
-                    ativo
-                      ? () => { window.location.href = '/dashboard' }
-                      : isAvaliacao
+                    isAvaliacao
                       ? () => { window.location.href = '/avaliacao' }
+                      : ativo
+                      ? () => { window.location.href = '/dashboard' }
                       : undefined
                   }
                   className={`bg-white rounded-xl p-6 flex flex-col justify-between min-h-[160px] transition-all duration-300 ${
