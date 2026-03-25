@@ -1,7 +1,27 @@
 'use client'
 
 import { useState, FormEvent } from 'react'
+import { motion } from 'framer-motion'
 import ScrollReveal from '@/components/ScrollReveal'
+import TypewriterEffect from '@/components/ui/TypewriterEffect'
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
+  },
+}
 
 type View = 'home' | 'paciente' | 'profissional'
 
@@ -63,10 +83,15 @@ function HomeView({
 
         {/* Subtítulo */}
         <p
-          className="anim-fade-up delay-300 text-lg sm:text-xl italic text-stone-500 mb-6 tracking-wide"
+          className="anim-fade-up delay-300 text-lg sm:text-xl italic text-stone-500 mb-6 tracking-wide min-h-[1.75rem]"
           style={{ fontFamily: 'var(--font-cormorant, Georgia, serif)' }}
         >
-          Ciência aplicada. Decisão segura.
+          <TypewriterEffect
+            text="Ciência aplicada. Decisão segura."
+            speed={55}
+            delay={0.6}
+            showCursor={true}
+          />
         </p>
 
         {/* Divisor */}
@@ -85,10 +110,17 @@ function HomeView({
         </p>
 
         {/* Cards de seleção */}
-        <div className="anim-fade-up delay-700 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {/* Paciente */}
-          <button
+          <motion.button
             onClick={onPaciente}
+            variants={itemVariants}
             className="group bg-white border border-stone-100 rounded-xl p-8 card-hover cursor-pointer text-left flex flex-col justify-between min-h-[160px] transition-all duration-300"
           >
             <div>
@@ -116,11 +148,12 @@ function HomeView({
                 →
               </span>
             </div>
-          </button>
+          </motion.button>
 
           {/* Profissional */}
-          <button
+          <motion.button
             onClick={onProfissional}
+            variants={itemVariants}
             className="group bg-white border border-stone-100 rounded-xl p-8 card-hover cursor-pointer text-left flex flex-col justify-between min-h-[160px] transition-all duration-300"
           >
             <div>
@@ -148,8 +181,8 @@ function HomeView({
                 →
               </span>
             </div>
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
       </div>
     </section>
   )
@@ -403,14 +436,20 @@ function ProfissionalView({
           </p>
         </div>
 
-        <ScrollReveal>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {sistemas.map((s, i) => {
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+            {sistemas.map((s) => {
               const ativo = s.status === 'ativo'
               const isAvaliacao = s.id === 'avaliacao'
               return (
-                <div
+                <motion.div
                   key={s.id}
+                  variants={itemVariants}
                   onClick={
                     ativo
                       ? () => { window.location.href = '/dashboard' }
@@ -418,7 +457,7 @@ function ProfissionalView({
                       ? () => { window.location.href = '/avaliacao' }
                       : undefined
                   }
-                  className={`anim-fade-up bg-white rounded-xl p-6 flex flex-col justify-between min-h-[160px] transition-all duration-300 ${
+                  className={`bg-white rounded-xl p-6 flex flex-col justify-between min-h-[160px] transition-all duration-300 ${
                     ativo
                       ? 'border border-stone-200 card-hover cursor-pointer group'
                       : isAvaliacao
@@ -427,7 +466,6 @@ function ProfissionalView({
                   }`}
                   style={{
                     borderLeft: ativo ? '3px solid #1C1C1A' : undefined,
-                    animationDelay: `${i * 80}ms`,
                   }}
                 >
                   <div>
@@ -470,11 +508,10 @@ function ProfissionalView({
                       →
                     </span>
                   </div>
-                </div>
+                </motion.div>
               )
             })}
-          </div>
-        </ScrollReveal>
+        </motion.div>
 
         <div className="mt-10 text-center">
           <button
