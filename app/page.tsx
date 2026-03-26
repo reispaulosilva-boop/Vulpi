@@ -271,7 +271,7 @@ const sistemas = [
     id: 'biologicos',
     titulo: 'Sistema Biológicos',
     descricao: 'Gestão de solicitações, auditorias e laudos para terapia biológica em psoríase e outras dermatoses inflamatórias.',
-    status: 'em-breve' as const,
+    status: 'ativo' as const,
   },
   {
     id: 'viral',
@@ -445,23 +445,23 @@ function ProfissionalView({
         >
             {sistemas.map((s) => {
               const ativo = s.status === 'ativo'
-              const isAvaliacao = s.id === 'avaliacao'
+              const hrefs: Record<string, string> = {
+                farmacia: '/dashboard',
+                avaliacao: '/avaliacao',
+                biologicos: '/biologicos',
+              }
               return (
                 <motion.div
                   key={s.id}
                   variants={itemVariants}
                   onClick={
-                    isAvaliacao
-                      ? () => { window.location.href = '/avaliacao' }
-                      : ativo
-                      ? () => { window.location.href = '/dashboard' }
+                    ativo && hrefs[s.id]
+                      ? () => { window.location.href = hrefs[s.id] }
                       : undefined
                   }
                   className={`bg-white rounded-xl p-6 flex flex-col justify-between min-h-[160px] transition-all duration-300 ${
                     ativo
                       ? 'border border-stone-200 card-hover cursor-pointer group'
-                      : isAvaliacao
-                      ? 'border border-stone-100 card-hover cursor-pointer group'
                       : 'border border-stone-100 opacity-50 cursor-default'
                   }`}
                   style={{
@@ -502,7 +502,7 @@ function ProfissionalView({
                   <div className="flex justify-end mt-4">
                     <span
                       className={`text-base transition-colors duration-200 ${
-                        ativo || isAvaliacao ? 'text-stone-400 group-hover:text-stone-700' : 'text-stone-200'
+                        ativo ? 'text-stone-400 group-hover:text-stone-700' : 'text-stone-200'
                       }`}
                     >
                       →
