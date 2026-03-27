@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import SenhaGate from '@/components/biologicos/SenhaGate'
+import BotaoVoltar from '@/components/BotaoVoltar'
 
 export default function BiologicosPage() {
   const router = useRouter()
@@ -21,5 +22,12 @@ export default function BiologicosPage() {
     router.push('/biologicos/selecao')
   }
 
-  return <SenhaGate onAutenticar={handleAutenticar} />
+  return (
+    <div className="relative">
+      <div className="absolute top-6 left-6">
+        <BotaoVoltar />
+      </div>
+      <SenhaGate onAutenticar={handleAutenticar} />
+    </div>
+  )
 }

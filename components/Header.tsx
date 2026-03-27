@@ -65,15 +65,22 @@ export default function Header() {
 
           <nav className="flex items-center gap-6">
             {navLink('/', 'Home')}
-            {navLink('/dashboard', 'Dashboard')}
-            {navLink('/catalogo', 'Catálogo')}
-            {navLink('/protocolos', 'Protocolos')}
-            <button
-              onClick={handleLogout}
-              className="text-sm text-stone-300 hover:text-stone-600 transition-colors duration-200 ml-2"
-            >
-              Sair →
-            </button>
+            {(pathname.startsWith('/dashboard') ||
+              pathname.startsWith('/catalogo') ||
+              pathname.startsWith('/protocolos') ||
+              pathname.startsWith('/formulacao')) && (
+              <>
+                {navLink('/dashboard', 'Dashboard')}
+                {navLink('/catalogo', 'Catálogo')}
+                {navLink('/protocolos', 'Protocolos')}
+                <button
+                  onClick={handleLogout}
+                  className="text-sm text-stone-300 hover:text-stone-600 transition-colors duration-200 ml-2"
+                >
+                  Sair →
+                </button>
+              </>
+            )}
           </nav>
         </div>
       </div>

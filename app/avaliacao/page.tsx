@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import BotaoVoltar from '@/components/BotaoVoltar'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -834,6 +835,7 @@ export default function AvaliacaoPage() {
       <SubHeader />
       <div className="px-4 sm:px-6 lg:px-8 pb-20">
         <div className="max-w-2xl mx-auto">
+          <BotaoVoltar />
           {bloco !== 'resultado' && <StepIndicator bloco={bloco} />}
 
           <div key={String(bloco)}>

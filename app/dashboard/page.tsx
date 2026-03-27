@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import DashboardSidebar from '@/components/DashboardSidebar'
 import DashboardTable from '@/components/DashboardTable'
+import BotaoVoltar from '@/components/BotaoVoltar'
 
 export const metadata = {
   title: 'Dashboard | VULPI – Protocolos de Prescrição',
@@ -25,6 +26,7 @@ export default function DashboardPage() {
       </Suspense>
 
       <main className="flex-1 ml-60 px-6 sm:px-8 py-8">
+        <BotaoVoltar />
         <Suspense fallback={<TableFallback />}>
           <DashboardTable />
         </Suspense>

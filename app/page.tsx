@@ -50,7 +50,7 @@ function HomeView({
   onProfissional: () => void
 }) {
   return (
-    <section className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
+    <section className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden pt-8">
       {/* Gradiente animado de fundo */}
       <div
         className="absolute inset-0 hero-gradient"
