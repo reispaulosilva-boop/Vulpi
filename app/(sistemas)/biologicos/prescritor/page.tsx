@@ -1,21 +1,8 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import DestinoCard from '@/components/biologicos/DestinoCard'
 
 export default function PrescritorPage() {
-  const router = useRouter()
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const autenticado = sessionStorage.getItem('biologicos_auth')
-      if (autenticado !== 'true') {
-        router.replace('/biologicos')
-      }
-    }
-  }, [router])
-
   return (
     <div
       className="min-h-screen px-4 py-16"

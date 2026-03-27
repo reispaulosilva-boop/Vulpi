@@ -1,21 +1,8 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import ModuloCard from '@/components/biologicos/ModuloCard'
 
 export default function SelecaoPage() {
-  const router = useRouter()
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const autenticado = sessionStorage.getItem('biologicos_auth')
-      if (autenticado !== 'true') {
-        router.replace('/biologicos')
-      }
-    }
-  }, [router])
-
   return (
     <div
       className="min-h-screen px-4 py-16"
